@@ -1,0 +1,23 @@
+NY  Neutral 2.0
+AZ  Little Happy 2.3333332538604736
+WI  Unhappy 1.0
+CA  Neutral 2.0
+KS  Unhappy 1.0
+LA  Unhappy 1.0
+WA  Little Unhappy 1.5
+NJ  Unhappy 1.25
+MI  Little Happy 2.25
+OH  Neutral 2.0
+TX  Unhappy 1.0
+FL  Little Unhappy 1.6666666666666667
+PA  Neutral 2.0
+NC  Little Unhappy 1.5
+WA Unhappy 1.0
+NY Unhappy 1.0
+TX Unhappy 1.0
+KY Little Unhappy 1.6666666269302368
+WI Little Unhappy 1.6666666269302368
+FL Unhappy 1.0
+CA Neutral 1.8333333333333333
+PA Neutral 2.0
+MA Neutral 2.0
