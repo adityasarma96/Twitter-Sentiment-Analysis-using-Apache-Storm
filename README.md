@@ -9,6 +9,6 @@ Implementation Details :
 
 Contributors:
 
-Aditya Sarma 
-Naresh Kumar
-Prem Parisi
+1. Aditya Sarma 
+2. Naresh Kumar
+3. Prem Parisi
