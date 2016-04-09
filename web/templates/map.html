@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Apache Storm Project</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+  <script src="/static/d3.v3.js"></script>
+  <script src="/static/topojson.js"></script>
+  <script src="/static/datamaps.all.min.js"></script>
+
+<div id="container" style="position: relative; width: 900px; height: 600px;"></div>
+<script>
+var source = new EventSource('/stream');
+var sentimentHash = {};
+source.onmessage = function (event) {
+  var state = event.data.split("|")[0];
+  var sentiment = event.data.split("|")[1];
+  console.log("NEW DATA IS HERE " + event.data);
+  sentimentHash[state]=sentiment;
+//hashURLInfo[county_id]=URLInfo;
+
+};
+
+var map = new Datamap({
+      scope: 'usa',
+      element: document.getElementById('container'),
+      setProjection: function(element, options) {
+          var projection, path;
+          projection = d3.geo.albersUsa()
+              .scale(element.offsetWidth)
+              .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+
+          path = d3.geo.path()
+              .projection( projection );
+
+          return {path: path, projection: projection};
+      },
+      geographyConfig: {
+        highlightBorderColor: '#bada55',
+       popupTemplate: function(geography, data) {
+          var sentiment = "N/A";
+          if(data){
+            sentiment = data.fillKey;
+          }
+          return '<div class="hoverinfo"><strong>' +
+          geography.properties.name + '</strong> <br />Sentiment:' +
+          sentiment + ' </div>'
+        },
+        highlightBorderWidth: 3
+      },
+
+
+      fills: {
+        'Super Unhappy':'#000033',
+        'Very Unhappy':'#000066',
+        'Unhappy':'#0033CC',
+        'Little Unhappy':'#00CCFF',
+        'Neutral':'#009900',
+        'Little Happy':'#CC3333',
+        'Happy':'#CC0000',
+        'Very Happy':'#990000',
+        'Super Happy':'#660000',
+        defaultFill: '#EDDC4E'
+      },
+      data:{
+      }
+});
+
+//add a map legend using the 'legend' plugin
+map.legend();
+var updateViz =  function(){
+    for(key in sentimentHash){
+        console.log("REFRESH: " + key + ":" + sentimentHash[key]);
+        var data = {};
+        if(sentimentHash[key]){
+          data[key] = {};
+          data[key]["fillKey"] = sentimentHash[key];
+          map.updateChoropleth(data);
+        }
+    }
+    sentimentHash = {};
+};
+window.setInterval(updateViz, 1000);
+</script>
+
+
+
+
+</head>
+
+<style>
+body {
+  margin: 0;
+  min-width: 960px;
+}
+
+</style>
+
+
+</html>
