@@ -6,3 +6,9 @@ Implementation Details :
 
 1. This project uses Apache Storm - distributed realtime computation system.
 2. It implements Sentiment Analysis of Stanford corenlp
+
+Contributors:
+
+1. Aditya Sarma 
+2. Naresh Kumar
+3. Prem Parisi
